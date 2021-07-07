@@ -47,6 +47,8 @@ template <class T> struct ACW32H
 {
 	T _h {NULL};
 
+	ACW32H() = default;
+
 	ACW32H(T&& arg) noexcept
 	{
 #ifdef HINTERNET
