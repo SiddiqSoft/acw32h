@@ -28,6 +28,3 @@ void foo()
 
 ```
 
-
-# Layout
-The repository does not include the usual .gitignore, .clang-format, etc. as I'd like you to have the option of using this as a submodule.
