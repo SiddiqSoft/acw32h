@@ -98,6 +98,10 @@ template <class T> struct ACW32H
 
 
 using ACW32HANDLE = ACW32H<HANDLE>;
+#ifdef HINTERNET
+using ACW32HINTERNET = ACW32H<HINTERNET>;
+#endif
+
 #else
 #pragma message("Requires Windows platform.")
 #endif
