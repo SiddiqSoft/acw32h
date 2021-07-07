@@ -92,6 +92,8 @@ template <class T> struct ACW32H
 
 	constexpr operator T() noexcept { return _h; }
 	constexpr operator bool() { return ((_h != NULL) && (_h != INVALID_HANDLE_VALUE)); }
+	operator std::string() { return std::to_string( static_cast<uint64_t>(_h) ); }
+	operator std::wstring() { return std::to_wstring( static_cast<uint64_t>(_h) ); }
 };
 
 
