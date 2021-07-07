@@ -1,9 +1,11 @@
 /*
 	Auto Closing Win32 HANDLE and HINTERNET wrappers
+	Repo: https://github.com/SiddiqSoft/acw32handle
+	Wiki: https://github.com/SiddiqSoft/acw32handle/wiki/Auto-Close-Release-Win32-Handle
 
 	BSD 3-Clause License
 
-	Copyright (c) 2003-2020, Abdelkareem Siddiq
+	Copyright (c) 2020, Siddiq Software LLC
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
