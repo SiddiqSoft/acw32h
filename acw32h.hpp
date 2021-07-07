@@ -40,6 +40,7 @@
 
 #include <type_traits>
 
+#if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
 /// @brief Automatically close the Win32 HANDLE or HINTERNET object
 /// @tparam T Must be either HANDLE or HINTERNET
 template <class T> struct ACW32H
@@ -93,5 +94,7 @@ template <class T> struct ACW32H
 
 
 using ACW32HANDLE = ACW32H<HANDLE>;
-
+#else
+#pragma message("Requires Windows platform.")
+#endif
 #endif
