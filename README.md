@@ -28,3 +28,8 @@ void foo()
 
 ```
 
+<small align="right">
+
+&copy; 2020 Siddiq Software LLC. All rights reserved. Refer to [LICENSE](LICENSE).
+
+</small>
