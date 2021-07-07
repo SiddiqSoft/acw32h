@@ -22,8 +22,8 @@ This should add `acw32handle` folder in your solution.
 void foo()
 {
    // Use the object
-   acw32h<HANDLE> h= ::CreateFileA(...);
-   // Use and don't worry about any throw, exit C++ will cleanup the handle if it was properly allocated!
+   ACW32H<HANDLE> h= ::CreateFileA(...);
+   // Use and don't worry about any throw, exit; C++ will cleanup the handle if it was properly allocated!
 }
 
 ```
