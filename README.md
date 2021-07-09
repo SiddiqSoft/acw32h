@@ -1,6 +1,8 @@
 Auto Closing/Releasing Win32 Handle Objects
 -------------------------------------------
 
+[![CodeQL](https://github.com/SiddiqSoft/acw32handle/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/SiddiqSoft/acw32handle/actions/workflows/codeql-analysis.yml)
+
 # Objective
 Make it easy to track the Win32 `HANDLE` and `HINTERNET` objects while keeping their use as drop-in replacement for their respective `HANDLE` or `HINTERNET` objects.
 Use only when you're holding objects that your application is required to close/release.
