@@ -10,19 +10,20 @@ Use only when you're holding objects that your application is required to close/
 - Useful for Windows projects
 
 # Usage
-From your solution folder `git submodule add https://github.com/SiddiqSoft/acw32handle.git`
 
-This should add `acw32handle` folder in your solution.
+- Use the nuget [SiddiqSoft.acw32h]()
+- You can also git submodule: `git submodule add https://github.com/SiddiqSoft/acw32handle.git`
 
+Example (when using nuget to add the header in the solution)
 
 ```c
 #include <windows.h>
-#include "acw32handle/acw32h.hpp"
+#include "siddiqsoft/acw32h.hpp"
 
 void foo()
 {
    // Use the object
-   ACW32H<HANDLE> h= ::CreateFileA(...);
+   siddiqsoft::acw32h<HANDLE> h( ::CreateFileA(...));
    // Use and don't worry about any throw, exit; C++ will cleanup the handle if it was properly allocated!
 }
 
