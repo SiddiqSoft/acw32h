@@ -78,9 +78,12 @@ namespace siddiqsoft
 		{
 			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE))
 			{
+#if defined(_WINHTTPX_) || defined(WINHTTPAPI)
 				if (std::is_same_v<T, HINTERNET> && _owned)
 					WinHttpCloseHandle(_h);
-				else if (std::is_same_v<T, HANDLE> && _owned)
+				else
+#endif
+				if (std::is_same_v<T, HANDLE> && _owned)
 					CloseHandle(_h);
 			}
 		}
@@ -93,9 +96,12 @@ namespace siddiqsoft
 		{
 			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE))
 			{
+#if defined(_WINHTTPX_) || defined(WINHTTPAPI)
 				if (std::is_same_v<T, HINTERNET> && _owned)
 					WinHttpCloseHandle(_h);
-				else if (std::is_same_v<T, HANDLE> && _owned)
+				else
+#endif
+				if (std::is_same_v<T, HANDLE> && _owned)
 					CloseHandle(_h);
 			}
 
@@ -112,8 +118,11 @@ namespace siddiqsoft
 	};
 } // namespace siddiqsoft
 
-using ACW32HANDLE	 = siddiqsoft::acw32h<HANDLE>;
+using ACW32HANDLE = siddiqsoft::acw32h<HANDLE>;
+#if defined(_WINHTTPX_) || defined(WINHTTPAPI)
 using ACW32HINTERNET = siddiqsoft::acw32h<HINTERNET>;
+#endif
+
 
 #else
 #pragma message("Requires Windows platform.")
