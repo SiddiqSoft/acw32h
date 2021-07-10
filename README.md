@@ -14,7 +14,7 @@ Use only when you're holding objects that your application is required to close/
 
 # Usage
 
-- Use the nuget [SiddiqSoft.acw32h]()
+- Use the nuget [SiddiqSoft.acw32h](https://www.nuget.org/packages/SiddiqSoft.acw32h/)
 - You can also git submodule: `git submodule add https://github.com/SiddiqSoft/acw32handle.git`
 
 Example (when using nuget to add the header in the solution)
