@@ -6,6 +6,7 @@ Auto Closing/Releasing Win32 Handle Objects
 ![](https://img.shields.io/nuget/v/SiddiqSoft.acw32h)
 ![](https://img.shields.io/github/v/tag/SiddiqSoft/acw32handle)
 ![](https://img.shields.io/azure-devops/tests/siddiqsoft/siddiqsoft/4)
+![](https://img.shields.io/azure-devops/coverage/siddiqsoft/siddiqsoft/4)
 
 # Objective
 Make it easy to track the Win32 `HANDLE` and `HINTERNET` objects while keeping their use as drop-in replacement for their respective `HANDLE` or `HINTERNET` objects.
