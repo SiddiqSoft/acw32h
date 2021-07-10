@@ -4,7 +4,7 @@
 #include "../src/acw32h.hpp"
 
 
-TEST(basic, TestAutoClose)
+TEST(basic, OwningAutoClose)
 {
 	HANDLE eh = ::CreateEvent(NULL, FALSE, FALSE, NULL);
 
@@ -18,10 +18,10 @@ TEST(basic, TestAutoClose)
 	try
 	{
 		// Will not compile! The eh cannot be copied and must be moved.
-		//ACW32HANDLE ach(eh);
+		//siddiqsoft::acw32h<HANDLE> ach(eh);
 
 		// We share ownership with the other handle
-		ACW32HANDLE ach(std::move(eh));
+		siddiqsoft::acw32h<HANDLE> ach(std::move(eh));
 
 		// The original handle is cleared
 		EXPECT_EQ(INVALID_HANDLE_VALUE, eh);

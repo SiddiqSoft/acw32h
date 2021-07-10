@@ -36,8 +36,8 @@
 
 #pragma once
 
-#ifndef ACW32HANDLE_HPP
-#define ACW32HANDLE_HPP
+#ifndef ACW32H_HPP
+#define ACW32H_HPP
 
 #include <type_traits>
 
@@ -48,32 +48,44 @@ namespace siddiqsoft
 	/// @brief Automatically close the Win32 HANDLE or HINTERNET object.
 	/// There cannot be an implementation of the reference
 	/// @tparam T Must be either HANDLE or HINTERNET
-	template <class T> struct acw32h
+	template <class T> class acw32h
 	{
-		T _h {NULL};
+		T	 _h {NULL};
+		bool _owned {false};
 
-		acw32h() = default;
+	public:
+		acw32h()
+			: _h(NULL)
+			, _owned(false) {};
+
+		// Forbidden: non-owning construction
+		acw32h(const T&) = delete;
+
+		// Forbidden: non-owning assignment
+		acw32h& operator=(const T& arg) = delete;
 
 		/// @brief Constructor takes ownership of the HANDLE clearing out the argument.
 		/// @param arg An open HANDLE/HINSTANCE from Windows; set to INVALID_HANDLE_VALUE upon return
 		explicit acw32h(T&& arg) noexcept
 		{
-#ifdef HINTERNET
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HINTERNET>) { WinHttpCloseHandle(_h); }
-#endif
-
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HANDLE>) { CloseHandle(_h); }
-
 			// Takes ownership by setting the arg to INVALID_HANDLE_VALUE
-			_h = std::exchange(arg, INVALID_HANDLE_VALUE);
+			_h	   = std::exchange(arg, INVALID_HANDLE_VALUE);
+			_owned = true;
 		}
+
 
 		~acw32h() noexcept
 		{
 #ifdef HINTERNET
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HINTERNET>) { WinHttpCloseHandle(_h); }
+			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HINTERNET>)
+			{
+				if (_owned) WinHttpCloseHandle(_h);
+			}
 #endif
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HANDLE>) { CloseHandle(_h); }
+			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HANDLE>)
+			{
+				if (_owned) CloseHandle(_h);
+			}
 		}
 
 
@@ -83,13 +95,20 @@ namespace siddiqsoft
 		acw32h& operator=(T&& arg)
 		{
 #ifdef HINTERNET
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HINTERNET>) { WinHttpCloseHandle(_h); }
+			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HINTERNET>)
+			{
+				if (_owned) WinHttpCloseHandle(_h);
+			}
 #endif
 
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HANDLE>) { CloseHandle(_h); }
+			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HANDLE>)
+			{
+				if (_owned) CloseHandle(_h);
+			}
 
 			// Takes ownership by setting the arg to INVALID_HANDLE_VALUE
-			_h = std::exchange(arg, INVALID_HANDLE_VALUE);
+			_h	   = std::exchange(arg, INVALID_HANDLE_VALUE);
+			_owned = true;
 			return *this;
 		}
 
