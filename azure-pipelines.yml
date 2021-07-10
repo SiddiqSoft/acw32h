@@ -59,8 +59,7 @@ steps:
     script: |
       echo Running googletest
       dir /w
-      cd x64
-      cd Release
+      cd output\x64\Release
       basic_tests.exe --gtest_output=xml:..\..\TestResults\
 
 - task: PublishTestResults@2
