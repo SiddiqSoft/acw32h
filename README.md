@@ -1,6 +1,9 @@
 Auto Closing/Releasing Win32 Handle Objects
 -------------------------------------------
 
+[![CodeQL](https://github.com/SiddiqSoft/acw32handle/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/SiddiqSoft/acw32handle/actions/workflows/codeql-analysis.yml)
+[![Build Status](https://dev.azure.com/siddiqsoft/siddiqsoft/_apis/build/status/SiddiqSoft.acw32handle?branchName=main)](https://dev.azure.com/siddiqsoft/siddiqsoft/_build/latest?definitionId=4&branchName=main)
+
 # Objective
 Make it easy to track the Win32 `HANDLE` and `HINTERNET` objects while keeping their use as drop-in replacement for their respective `HANDLE` or `HINTERNET` objects.
 Use only when you're holding objects that your application is required to close/release.
@@ -10,19 +13,27 @@ Use only when you're holding objects that your application is required to close/
 - Useful for Windows projects
 
 # Usage
-From your solution folder `git submodule add https://github.com/SiddiqSoft/acw32handle.git`
 
-This should add `acw32handle` folder in your solution.
+- Use the nuget [SiddiqSoft.acw32h]()
+- You can also git submodule: `git submodule add https://github.com/SiddiqSoft/acw32handle.git`
 
+Example (when using nuget to add the header in the solution)
 
-```c
+```cpp
 #include <windows.h>
-#include "acw32handle/acw32h.hpp"
+#include "siddiqsoft/acw32h.hpp"
 
 void foo()
 {
    // Use the object
-   ACW32H<HANDLE> h= ::CreateFileA(...);
+   siddiqsoft::acw32h<HANDLE> h( ::CreateFileA(...));
+
+   // or
+   HANDLE mh = ::CreateFile(.....);
+   // A std::move is required since the implementation requires
+   // the transfer of ownership in order to close the handle.
+   ACW32HANDLE myHandle( std::move(mh) );
+
    // Use and don't worry about any throw, exit; C++ will cleanup the handle if it was properly allocated!
 }
 
