@@ -60,7 +60,7 @@ steps:
       echo Running googletest
       cd x64
       cd Release
-      tests.exe --gtest_output=xml:..\..\TestResults\
+      basic_tests.exe --gtest_output=xml:..\..\TestResults\
 
 - task: PublishTestResults@2
   displayName: 'Publish Release Test Results **/TEST-*.xml'
