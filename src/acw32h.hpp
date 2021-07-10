@@ -76,15 +76,12 @@ namespace siddiqsoft
 
 		~acw32h() noexcept
 		{
-#ifdef HINTERNET
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HINTERNET>)
+			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE))
 			{
-				if (_owned) WinHttpCloseHandle(_h);
-			}
-#endif
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HANDLE>)
-			{
-				if (_owned) CloseHandle(_h);
+				if (std::is_same_v<T, HINTERNET> && _owned)
+					WinHttpCloseHandle(_h);
+				else if (std::is_same_v<T, HANDLE> && _owned)
+					CloseHandle(_h);
 			}
 		}
 
@@ -94,16 +91,12 @@ namespace siddiqsoft
 		/// @return Self
 		acw32h& operator=(T&& arg)
 		{
-#ifdef HINTERNET
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HINTERNET>)
+			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE))
 			{
-				if (_owned) WinHttpCloseHandle(_h);
-			}
-#endif
-
-			if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE) && std::is_same_v<T, HANDLE>)
-			{
-				if (_owned) CloseHandle(_h);
+				if (std::is_same_v<T, HINTERNET> && _owned)
+					WinHttpCloseHandle(_h);
+				else if (std::is_same_v<T, HANDLE> && _owned)
+					CloseHandle(_h);
 			}
 
 			// Takes ownership by setting the arg to INVALID_HANDLE_VALUE
@@ -119,10 +112,8 @@ namespace siddiqsoft
 	};
 } // namespace siddiqsoft
 
-using ACW32HANDLE = siddiqsoft::acw32h<HANDLE>;
-#ifdef HINTERNET
+using ACW32HANDLE	 = siddiqsoft::acw32h<HANDLE>;
 using ACW32HINTERNET = siddiqsoft::acw32h<HINTERNET>;
-#endif
 
 #else
 #pragma message("Requires Windows platform.")
