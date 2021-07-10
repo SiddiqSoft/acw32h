@@ -61,12 +61,13 @@ steps:
       dir /w
       cd output\x64\Release
       basic_tests.exe --gtest_output=xml:..\..\TestResults\
+      dir ..\..\TestResults\
 
 - task: PublishTestResults@2
   displayName: 'Publish Release Test Results **/TEST-*.xml'
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TestResults/tests.xml'
+    testResultsFiles: '**/TestResults/test_detail.xml'
     mergeTestResults: true
     buildPlatform: 'x64'
     buildConfiguration: 'Release'
