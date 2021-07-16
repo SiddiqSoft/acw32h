@@ -19,18 +19,21 @@ Use only when you're holding objects that your application is required to close/
 # Usage
 
 - Use the nuget [SiddiqSoft.acw32h](https://www.nuget.org/packages/SiddiqSoft.acw32h/)
-- You can also git submodule: `git submodule add https://github.com/SiddiqSoft/acw32handle.git`
+- Be sure to use the proper class `ACW32HANDLE` or `ACW32HINTERNET`. The underlying types of `HANDLE` and `HINTERNET` end up the same so it is not possible to template them into a single class.
+- Make sure to include the relevant file for your case: `acw32handle.hpp` or `acw32hinternet.hpp` as windows headers occasionally have peculiar ordering (notably when WinHTTP, WinINET, WinSock are in the mix).
 
 Example (when using nuget to add the header in the solution)
 
 ```cpp
 #include <windows.h>
-#include "siddiqsoft/acw32h.hpp"
+#include "siddiqsoft/acw32handle.hpp"
+#include <winhttp.h>
+#include "siddiqsoft/acw32hinternet.hpp"
 
 void foo()
 {
    // Use the object
-   siddiqsoft::acw32h<HANDLE> h( ::CreateFileA(...));
+   siddiqsoft::ACW32HANDLE h( ::CreateFileA(...) );
 
    // or
    HANDLE mh = ::CreateFile(.....);
@@ -38,13 +41,13 @@ void foo()
    // the transfer of ownership in order to close the handle.
    ACW32HANDLE myHandle( std::move(mh) );
 
-   // Use and don't worry about any throw, exit; C++ will cleanup the handle if it was properly allocated!
+   // C++ will cleanup the handle if it was properly allocated!
 }
 
 ```
 
 <small align="right">
 
-&copy; 2020 Siddiq Software LLC. All rights reserved. Refer to [LICENSE](LICENSE).
+&copy; 2021 Siddiq Software LLC. All rights reserved. Refer to [LICENSE](LICENSE).
 
 </small>

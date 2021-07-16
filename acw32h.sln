@@ -19,6 +19,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D4B48506-F8E1-4A0E-A296-138FAE60960E}"
 	ProjectSection(SolutionItems) = preProject
 		src\acw32h.hpp = src\acw32h.hpp
+		src\acw32handle.hpp = src\acw32handle.hpp
+		src\acw32hinternet.hpp = src\acw32hinternet.hpp
 	EndProjectSection
 EndProject
 Global
