@@ -101,6 +101,15 @@ namespace siddiqsoft
 			_ih = std::exchange(arg, INVALID_HANDLE_VALUE);
 			return *this;
 		}
+
+
+		ACW32HINTERNET& operator=(ACW32HINTERNET&& arg)
+		{
+			internalClose();
+			// Takes ownership by setting the arg to INVALID_HANDLE_VALUE
+			_ih = std::exchange(arg._ih, INVALID_HANDLE_VALUE);
+			return *this;
+		}
 	};
 } // namespace siddiqsoft
 #else
