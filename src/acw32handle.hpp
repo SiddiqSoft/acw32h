@@ -85,8 +85,17 @@ namespace siddiqsoft
 
 		/// @brief Constructor takes ownership of the HANDLE clearing out the argument.
 		/// @param arg An open HANDLE from Windows; set to INVALID_HANDLE_VALUE upon return
-		explicit ACW32HANDLE(HANDLE&& arg) noexcept { _h = std::exchange(arg, INVALID_HANDLE_VALUE); }
+		explicit ACW32HANDLE(HANDLE&& arg) noexcept
+			: _h(std::exchange(arg, INVALID_HANDLE_VALUE))
+		{
+		}
 
+		/// @brief Constructor takes ownership of the HANDLE clearing out the argument.
+		/// @param arg An open HANDLE from Windows; set to INVALID_HANDLE_VALUE upon return
+		explicit ACW32HANDLE(ACW32HANDLE&& arg) noexcept
+			: _h(std::move(arg))
+		{
+		}
 
 		/// @brief Owning assignment operator
 		/// @param arg An open HANDLE/HINSTANCE from Windows; set to INVALID_HANDLE_VALUE upon return

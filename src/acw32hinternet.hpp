@@ -79,8 +79,17 @@ namespace siddiqsoft
 
 		/// @brief Constructor takes ownership of the HINSTANCE clearing out the argument.
 		/// @param arg An open HINSTANCE from Windows; set to INVALID_HANDLE_VALUE upon return
-		explicit ACW32HINTERNET(HINTERNET&& arg) noexcept { _ih = std::exchange(arg, INVALID_HANDLE_VALUE); }
+		explicit ACW32HINTERNET(HINTERNET&& arg) noexcept
+			: _ih(std::exchange(arg, INVALID_HANDLE_VALUE))
+		{
+		}
 
+		/// @brief Constructor takes ownership of the HINSTANCE clearing out the argument.
+		/// @param arg An open HINSTANCE from Windows; set to INVALID_HANDLE_VALUE upon return
+		explicit ACW32HINTERNET(ACW32HINTERNET&& arg) noexcept
+			: _ih(std::move(arg))
+		{
+		}
 
 		/// @brief Owning assignment operator
 		/// @param arg An open HINSTANCE from Windows; set to INVALID_HANDLE_VALUE upon return
