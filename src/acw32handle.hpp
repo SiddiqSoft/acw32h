@@ -59,7 +59,7 @@ namespace siddiqsoft
 		{
 			try
 			{
-				if ((_h != NULL) || (_h != INVALID_HANDLE_VALUE)) { CloseHandle(_h); }
+				if ((_h != NULL) && (_h != INVALID_HANDLE_VALUE)) { CloseHandle(_h); }
 				_h = NULL;
 			}
 			catch (...)
@@ -108,7 +108,9 @@ namespace siddiqsoft
 			return *this;
 		}
 
-
+		/// @brief Owning assignment operator
+		/// @param arg An existing ACW32HANDLE instance
+		/// @return Self
 		ACW32HANDLE& operator=(ACW32HANDLE&& arg)
 		{
 			internalClose();

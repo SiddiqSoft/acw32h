@@ -57,7 +57,7 @@ namespace siddiqsoft
 		/// @brief Close the HINTERNET handle
 		void internalClose()
 		{
-			if ((_ih != NULL) || (_ih != INVALID_HANDLE_VALUE)) { WinHttpCloseHandle(_ih); }
+			if ((_ih != NULL) && (_ih != INVALID_HANDLE_VALUE)) { WinHttpCloseHandle(_ih); }
 			_ih = NULL;
 		}
 
@@ -85,7 +85,7 @@ namespace siddiqsoft
 		}
 
 		/// @brief Constructor takes ownership of the HINSTANCE clearing out the argument.
-		/// @param arg An open HINSTANCE from Windows; set to INVALID_HANDLE_VALUE upon return
+		/// @param arg An existing ACW32HINTERNET
 		explicit ACW32HINTERNET(ACW32HINTERNET&& arg) noexcept
 			: _ih(std::exchange(arg._ih, INVALID_HANDLE_VALUE))
 		{
@@ -103,6 +103,9 @@ namespace siddiqsoft
 		}
 
 
+		/// @brief Owning assignment operator
+		/// @param arg An existing ACW32HINTERNET instance
+		/// @return Self
 		ACW32HINTERNET& operator=(ACW32HINTERNET&& arg)
 		{
 			internalClose();
