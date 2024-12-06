@@ -6,6 +6,8 @@ if(${${PROJECT_NAME}_BUILD_TESTS})
     target_compile_options( ${TESTPROJ}
                             PRIVATE
                             $<$<CXX_COMPILER_ID:MSVC>:/std:c++20> )
+    # This setting is required for us to handle the excepted exception from CloseHandle
+    target_compile_options( ${TESTPROJ} PRIVATE "/EHa" )
     target_sources( ${TESTPROJ}
                     PRIVATE
                     ${PROJECT_SOURCE_DIR}/tests/test.cpp)

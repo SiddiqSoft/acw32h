@@ -76,7 +76,6 @@ stages:
         configFilePath: 'GitVersion.yml'
 
     # Set the flags for testing, build here.
-    # acw32handle_BUILD_TESTS=ON
     - task: CMake@1
       displayName: 'CMake Configure $(cmake.preset)'
       inputs:
