@@ -202,7 +202,7 @@ stages:
       displayName: 'Release to GitHub'
       inputs:
         gitHubConnection: 'github-packages-sqs'
-        repositoryName: 'siddiqsoft/AzureCppUtils'
+        repositoryName: 'siddiqsoft/acw32h'
         action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'userSpecifiedTag'
