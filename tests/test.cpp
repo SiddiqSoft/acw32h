@@ -42,11 +42,12 @@ TEST(basic, OwningAutoClose_HANDLE)
 	}
 	catch (...)
 	{
+		// Force set the value..
 		SetLastError(ERROR_INVALID_HANDLE);
 		rc = FALSE;
 	}
 	// Failure should be expected
-	EXPECT_EQ(FALSE, rc);
+	EXPECT_EQ(FALSE, rc) << "must be FALSE - rc: " << rc;
 	// Error code should be ERROR_INVALID_HANDLE or ERROR_INVALID_STATE
 	auto lerr = GetLastError();
 	EXPECT_TRUE((ERROR_INVALID_HANDLE == lerr) || (lerr == ERROR_INVALID_STATE)) << "rc: " << rc << " lerr: " << lerr;
