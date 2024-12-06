@@ -38,13 +38,14 @@ TEST(basic, OwningAutoClose_HANDLE)
 	BOOL rc = TRUE;
 	try
 	{
-		auto rc = CloseHandle(HANDLE(originalHandleValue));
+		rc = CloseHandle(HANDLE(originalHandleValue));
 	}
 	catch (...)
 	{
 		// Force set the value..
 		SetLastError(ERROR_INVALID_HANDLE);
-		rc = FALSE;
+		// Set to FALSE if the previous code left it as 'TRUE'
+		rc = rc == TRUE ? FALSE : rc;
 	}
 	// Failure should be expected
 	EXPECT_EQ(FALSE, rc) << "must be FALSE - rc: " << rc;
