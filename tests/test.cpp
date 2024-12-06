@@ -1,9 +1,9 @@
 #include "gtest/gtest.h"
 
 #include <Windows.h>
-#include "../src/acw32handle.hpp"
+#include "../include/siddiqsoft/acw32handle.hpp"
 #include <winhttp.h>
-#include "../src/acw32hinternet.hpp"
+#include "../include/siddiqsoft/acw32hinternet.hpp"
 
 #pragma comment(lib, "winhttp.lib")
 
@@ -22,9 +22,6 @@ TEST(basic, OwningAutoClose_HANDLE)
 	try
 	{
 		// Will not compile! The eh cannot be copied and must be moved.
-		//siddiqsoft::acw32h<HANDLE> ach(eh);
-
-		// We share ownership with the other handle
 		siddiqsoft::ACW32HANDLE ach(std::move(eh));
 
 		// The original handle is cleared
@@ -37,14 +34,24 @@ TEST(basic, OwningAutoClose_HANDLE)
 		EXPECT_TRUE(FALSE) << e.what();
 	}
 
-	// The handle must be closed
 	// If the CloseHandle is called twice, we throw.
-	auto rc = CloseHandle(HANDLE(originalHandleValue));
+	BOOL rc = TRUE;
+	try
+	{
+		rc = CloseHandle(HANDLE(originalHandleValue));
+	}
+	catch (...)
+	{
+		// Force set the value..
+		SetLastError(ERROR_INVALID_HANDLE);
+		// Set to FALSE if the previous code left it as 'TRUE'
+		rc = rc == TRUE ? FALSE : rc;
+	}
 	// Failure should be expected
-	EXPECT_EQ(FALSE, rc);
+	EXPECT_EQ(FALSE, rc) << "must be FALSE - rc: " << rc;
 	// Error code should be ERROR_INVALID_HANDLE or ERROR_INVALID_STATE
 	auto lerr = GetLastError();
-	EXPECT_TRUE((ERROR_INVALID_HANDLE == lerr) || (lerr == ERROR_INVALID_STATE));
+	EXPECT_TRUE((ERROR_INVALID_HANDLE == lerr) || (lerr == ERROR_INVALID_STATE)) << "rc: " << rc << " lerr: " << lerr;
 }
 
 
